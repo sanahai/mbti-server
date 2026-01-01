@@ -3,83 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBTI 성격 유형 분석 - AI 심리 연구소</title>
+    <title>MBTI 성격 분석 - AI 연구소</title>
     <style>
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f0f2f5; margin: 0; color: #333; }
+        /* 🎨 디자인 스타일 (사라지지 않게 여기에 다 넣었습니다) */
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f4f6f8; margin: 0; padding: 20px; color: #333; text-align: center; }
         
-        /* 헤더 스타일 */
-        header { text-align: center; padding: 20px 0; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 30px; }
-        header h3 { margin: 0; color: #2c3e50; font-size: 1.5rem; }
+        /* 공통 헤더 */
+        header { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; max-width: 600px; margin-left: auto; margin-right: auto; }
         header a { text-decoration: none; color: inherit; }
-        .home-link { display: block; margin-top: 10px; color: #3498db; font-weight: bold; font-size: 0.9rem; }
+        
+        /* 메인 컨테이너 */
+        .container { background: white; max-width: 600px; margin: 0 auto; padding: 40px 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); min-height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
 
-        /* 컨테이너 */
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; background: white; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; min-height: 400px; display: flex; flex-direction: column; justify-content: center; }
+        /* 버튼들 */
+        .btn-start { background-color: #6c5ce7; color: white; border: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 30px; cursor: pointer; font-weight: bold; transition: 0.3s; margin-top: 20px; }
+        .btn-start:hover { background-color: #5b4cc4; transform: scale(1.05); }
 
-        /* 버튼 스타일 */
-        .btn-start { background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 1.2rem; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .btn-start:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4); }
-
-        .btn-option { width: 100%; padding: 15px; margin: 10px 0; border: 2px solid #e1e1e1; border-radius: 12px; background: white; font-size: 1rem; cursor: pointer; transition: 0.2s; }
-        .btn-option:hover { border-color: #764ba2; background-color: #f8f4ff; color: #764ba2; font-weight: bold; }
+        .btn-option { width: 100%; max-width: 400px; padding: 18px; margin: 10px 0; border: 2px solid #eee; background: white; border-radius: 12px; font-size: 1rem; cursor: pointer; transition: 0.2s; color: #555; }
+        .btn-option:hover { border-color: #6c5ce7; color: #6c5ce7; background-color: #f0f0ff; font-weight: bold; }
 
         /* 진행바 */
-        .progress-bar { width: 100%; height: 10px; background: #eee; border-radius: 5px; margin-bottom: 20px; overflow: hidden; }
-        .progress-fill { height: 100%; background: #764ba2; width: 0%; transition: width 0.3s ease; }
+        .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 4px; margin-bottom: 30px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #6c5ce7; width: 0%; transition: width 0.3s; }
 
-        /* 결과 화면 */
-        .result-box { text-align: left; line-height: 1.6; }
-        .mbti-title { font-size: 2.5rem; color: #764ba2; font-weight: bold; text-align: center; margin: 20px 0; }
-        
-        .hidden { display: none; }
+        /* 유틸리티 */
+        .hidden { display: none !important; }
+        h1 { margin: 0 0 10px 0; color: #2d3436; }
+        p { color: #636e72; line-height: 1.6; }
     </style>
 </head>
 <body>
 
     <header>
         <a href="/">
-            <h3>🧠 AI 심리 분석 연구소</h3>
+            <h3 style="margin:0;">🧠 AI 심리 분석 연구소</h3>
+            <span style="font-size: 0.9rem; color: #6c5ce7; font-weight: bold;">🏠 홈으로 돌아가기</span>
         </a>
-        <a href="/" class="home-link">🏠 홈으로 돌아가기</a>
     </header>
+
     <div class="container">
         
-        <div id="start-screen">
+        <div id="screen-start">
             <div style="font-size: 60px; margin-bottom: 20px;">🧩</div>
-            <h1 style="color: #2c3e50;">MBTI 정밀 분석</h1>
-            <p style="color: #7f8c8d; margin-bottom: 40px;">
-                단순한 4글자가 아닙니다.<br>
-                AI가 당신의 답변을 분석하여<br>숨겨진 성격과 특징을 찾아냅니다.
-            </p>
+            <h1>MBTI 성격 분석</h1>
+            <p>48가지 정밀 문항을 통해<br>나의 진짜 성격을 알아보세요.</p>
             <button class="btn-start" onclick="startTest()">분석 시작하기</button>
         </div>
 
-        <div id="question-screen" class="hidden">
-            <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-            <h3 id="question-text" style="font-size: 1.3rem; margin-bottom: 30px;">질문 내용</h3>
-            <div id="options-container">
+        <div id="screen-question" class="hidden" style="width: 100%;">
+            <div class="progress-bar"><div id="progress" class="progress-fill"></div></div>
+            <h2 id="question-text" style="margin-bottom: 30px;">질문이 여기에 나옵니다</h2>
+            <div id="options-box" style="display: flex; flex-direction: column; align-items: center;">
                 </div>
         </div>
 
-        <div id="loading-screen" class="hidden">
-            <div style="font-size: 50px; animation: bounce 1s infinite;">🧠</div>
-            <h2>AI가 분석 중입니다...</h2>
-            <p>답변 내용을 바탕으로 성격을 추론하고 있습니다.<br>잠시만 기다려주세요.</p>
+        <div id="screen-loading" class="hidden">
+            <div style="font-size: 50px; animation: spin 1s infinite;">⏳</div>
+            <h2>AI 분석 중...</h2>
+            <p>서버에서 결과를 받아오고 있습니다.<br>잠시만 기다려주세요.</p>
         </div>
 
-        <div id="result-screen" class="hidden">
-            <h2>분석 결과</h2>
-            <div id="result-content" class="result-box">
-                </div>
-            <a href="/" class="btn-start" style="display:inline-block; margin-top:30px; text-decoration:none; font-size:1rem;">홈으로 가기</a>
+        <div id="screen-result" class="hidden">
+            <h2 style="color: #6c5ce7;">분석 완료!</h2>
+            <div id="result-content" style="background: #f8f9fa; padding: 20px; border-radius: 15px; text-align: left; margin: 20px 0; white-space: pre-wrap;">
+                결과가 여기에 표시됩니다.
+            </div>
+            <button class="btn-start" onclick="location.reload()">다시 하기</button>
         </div>
 
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // 질문 데이터 (일단 테스트용 4개만 넣었습니다. 잘 되면 늘리세요!)
+        const questions = [
+            { text: "휴일에는 주로 무엇을 하며 시간을 보내나요?", options: ["친구들과 만나 밖에서 논다 (E)", "집에서 혼자 쉬거나 취미를 즐긴다 (I)"] },
+            { text: "멍하니 상상이나 공상에 빠질 때가 많나요?", options: ["자주 그런다 (N)", "현실적인 생각을 주로 한다 (S)"] },
+            { text: "친구가 우울해서 전화를 했습니다. 당신의 반응은?", options: ["무슨 일이야? 해결책을 찾는다 (T)", "많이 힘들었겠구나.. 공감한다 (F)"] },
+            { text: "여행 계획을 짤 때 당신의 스타일은?", options: ["분 단위로 꼼꼼하게 짠다 (J)", "큰 틀만 짜고 가서 정한다 (P)"] }
+        ];
+
+        let currentStep = 0;
+        let answers = [];
+
+        // 화면 요소들
+        const screenStart = document.getElementById('screen-start');
+        const screenQuestion = document.getElementById('screen-question');
+        const screenLoading = document.getElementById('screen-loading');
+        const screenResult = document.getElementById('screen-result');
+        const questionText = document.getElementById('question-text');
+        const optionsBox = document.getElementById('options-box');
+        const progressBar = document.getElementById('progress');
+
+        function startTest() {
+            screenStart.classList.add('hidden');
+            screenQuestion.classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentStep];
+            
+            // 진행바
+            const percent = ((currentStep) / questions.length) * 100;
+            progressBar.style.width = percent + '%';
+
+            // 텍스트 업데이트
+            questionText.innerText = `Q${currentStep + 1}. ${q.text}`;
+
+            // 버튼 만들기 (기존 버튼 삭제 후 새로 생성)
+            optionsBox.innerHTML = ''; 
+            
+            q.options.forEach(option => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-option';
+                btn.innerText = option;
+                btn.onclick = () => nextStep(q.text, option); // 클릭하면 다음으로
+                optionsBox.appendChild(btn);
+            });
+        }
+
+        function nextStep(qText, aText) {
+            answers.push({ question: qText, answer: aText });
+            currentStep++;
+
+            if (currentStep < questions.length) {
+                showQuestion();
+            } else {
+                finishTest();
+            }
+        }
+
+        async function finishTest() {
+            screenQuestion.classList.add('hidden');
+            screenLoading.classList.remove('hidden');
+
+            try {
+                // 서버로 전송 (상대 경로 사용)
+                const res = await fetch('/analyze/mbti', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ answers: answers })
+                });
+
+                if (!res.ok) throw new Error("서버 응답 오류");
+
+                const data = await res.json();
+                showResult(data);
+
+            } catch (err) {
+                console.error(err);
+                alert("분석 중 오류가 발생했습니다: " + err.message);
+                location.reload();
+            }
+        }
+
+        function showResult(data) {
+            screenLoading.classList.add('hidden');
+            screenResult.classList.remove('hidden');
+            
+            const content = document.getElementById('result-content');
+            
+            if (data.mbti) {
+                content.innerHTML = `<h3 style='text-align:center; color:#6c5ce7; font-size:2rem;'>${data.mbti}</h3><hr>${data.desc || data.summary || JSON.stringify(data)}`;
+            } else {
+                content.innerText = JSON.stringify(data, null, 2);
+            }
+        }
+    </script>
 
     <style>
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </body>
 </html>
