@@ -65,7 +65,7 @@ async function showLoading() {
 
     try {
         // 서버로 답변 전송!
-        const response = await fetch('/analyze/attachment', {
+        const response = await fetch('/analyze/...', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ answers: answers })
@@ -100,4 +100,5 @@ function showResult(data) {
             <a href="/" style="display:inline-block; padding:15px 30px; background:#333; color:white; text-decoration:none; border-radius:30px;">홈으로 돌아가기</a>
         </div>
     `;
+
 }
