@@ -138,7 +138,7 @@ async function finishTest() {
         console.log("⚖️ 에겐/테토 분석 요청 전송 중...");
 
         // ★ [중요] 에겐 테스트 전용 주소 (/analyze/egen)
-        const response = await fetch('http://localhost:3003/analyze/egen', {
+        const response = await fetch('/analyze/...', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ answers: userAnswers })
@@ -174,4 +174,5 @@ async function finishTest() {
         alert("오류가 발생했습니다. 다시 시도해주세요.");
         location.reload();
     }
+
 }
