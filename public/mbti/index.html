@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini MBTI 분석기</title>
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center; background-color: #f9f9f9; color: #333; }
+        h1 { margin-bottom: 30px; color: #222; }
+        button { padding: 15px 20px; width: 100%; margin: 8px 0; cursor: pointer; background-color: #fff; border: 1px solid #ddd; border-radius: 8px; text-align: left; font-size: 16px; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button:hover { background-color: #eef; border-color: #ccf; transform: translateY(-2px); }
+        .hidden { display: none; }
+        .nav-container { display: flex; justify-content: space-between; margin-top: 20px; }
+        .nav-btn { width: 48%; text-align: center; color: white; border: none; font-weight: bold; }
+        .result-box { text-align: left; margin-top: 20px; }
+        /* 광고 박스 */
+        .ad-box { background: #eee; padding: 10px; margin: 15px 0; border: 1px dashed #aaa; text-align: center; font-size: 12px; color: #777; }
+    </style>
+</head>
+<body>
+    <div id="start-screen">
+        <h1>🤖 Gemini MBTI 분석기</h1>
+        <p>48개의 질문으로 알아보는<br>나의 진짜 성격 유형</p>
+        <button class="nav-btn" onclick="startTest()" style="background-color: #4285F4; width: 100%; text-align: center;">검사 시작하기</button>
+        <div class="ad-box">📢 [광고] 시작 화면 하단 배너</div>
+    </div>
+
+    <div id="question-screen" class="hidden">
+        <div class="ad-box">📢 [광고] 질문지 상단 배너</div>
+
+        <div id="progress" style="font-weight: bold; color: #666; margin-bottom: 10px;">1 / 48</div>
+        <h2 id="question-text" style="min-height: 60px; margin-bottom: 20px;">질문 내용</h2>
+        
+        <div id="options"></div> 
+
+        <div class="nav-container">
+            <button id="prev-btn" class="nav-btn" onclick="prevQuestion()" style="background-color: #999;">⬅ 이전</button>
+            <button class="nav-btn" onclick="quitTest()" style="background-color: #ff6b6b;">❌ 종료</button>
+        </div>
+
+        <div class="ad-box">📢 [광고] 질문지 하단 배너</div>
+    </div>
+
+    <div id="loading-screen" class="hidden">
+        <h2 id="loading-text">뇌파 분석 중... 🧠</h2>
+        <p>AI가 당신의 답변을 분석하고 결과를 저장 중입니다!</p>
+    </div>
+
+    <div id="result-screen" class="hidden">
+        <h1>당신의 유형은: <span id="mbti-type" style="color: #4285F4;"></span></h1>
+        <p id="mbti-summary" style="font-weight: bold; margin-bottom: 30px;"></p>
+        <div id="result-details" class="result-box"></div>
+        
+        <div class="ad-box">📢 [광고] 결과 화면 중간 배너</div>
+
+        <button class="nav-btn" onclick="location.reload()" style="background-color: #4285F4; width: 100%; text-align: center; margin-top: 30px;">처음부터 다시 하기</button>
+        <br><br>
+        <button class="nav-btn" onclick="location.href='/'" style="background-color: #333; width: 100%; text-align: center;">🏠 메인으로 가기</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

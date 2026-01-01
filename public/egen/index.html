@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>에겐 vs 테토 테스트</title>
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center; background-color: #fffbf0; color: #333; }
+        h1 { margin-bottom: 30px; color: #d35400; }
+        button { padding: 15px 20px; width: 100%; margin: 8px 0; cursor: pointer; background-color: #fff; border: 1px solid #e67e22; border-radius: 8px; text-align: left; font-size: 16px; transition: all 0.2s; }
+        button:hover { background-color: #fff0d6; transform: translateY(-2px); }
+        .hidden { display: none; }
+        .nav-container { display: flex; justify-content: space-between; margin-top: 20px; }
+        .nav-btn { width: 48%; text-align: center; color: white; border: none; font-weight: bold; }
+        .result-box { text-align: left; margin-top: 20px; }
+        .ad-box { background: #eee; padding: 10px; margin: 15px 0; border: 1px dashed #aaa; text-align: center; font-size: 12px; color: #777; }
+    </style>
+</head>
+<body>
+    <div id="start-screen">
+        <h1>⚖️ 에겐 vs 테토 테스트</h1>
+        <p>10가지 질문으로 알아보는<br>나의 본능적 성향 (남성성/여성성)</p>
+        <button class="nav-btn" onclick="startTest()" style="background-color: #e67e22; width: 100%; text-align: center;">검사 시작하기</button>
+        <div class="ad-box">📢 [광고] 배너</div>
+    </div>
+
+    <div id="question-screen" class="hidden">
+        <div class="ad-box">📢 [광고] 질문 상단 배너</div>
+        
+        <div id="progress" style="font-weight: bold; color: #d35400; margin-bottom: 10px;">1 / 10</div>
+        <h2 id="question-text" style="min-height: 60px; margin-bottom: 20px;">질문 내용</h2>
+        
+        <div id="options"></div> 
+
+        <div class="nav-container">
+            <button id="prev-btn" class="nav-btn" onclick="prevQuestion()" style="background-color: #999;">⬅ 이전</button>
+            <button class="nav-btn" onclick="quitTest()" style="background-color: #ff6b6b;">❌ 종료</button>
+        </div>
+        
+        <div class="ad-box">📢 [광고] 질문 하단 배너</div>
+    </div>
+
+    <div id="loading-screen" class="hidden">
+        <h2>성향 분석 중... ⚖️</h2>
+        <p>AI가 당신의 본능을 파악하고 있습니다.</p>
+    </div>
+
+    <div id="result-screen" class="hidden">
+        <h1>당신의 유형은: <span id="result-title" style="color: #d35400;"></span></h1>
+        <p id="result-summary" style="font-weight: bold; margin-bottom: 30px;"></p>
+        <div id="result-details" class="result-box"></div>
+        
+        <div class="ad-box">📢 [광고] 결과 배너</div>
+
+        <button class="nav-btn" onclick="location.reload()" style="background-color: #e67e22; width: 100%; text-align: center; margin-top: 30px;">다시 하기</button>
+        <br><br>
+        <button class="nav-btn" onclick="location.href='/'" style="background-color: #333; width: 100%; text-align: center;">🏠 메인으로</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

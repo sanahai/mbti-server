@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>종합 심리 분석 플랫폼</title>
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; text-align: center; background-color: #f8f9fa; padding: 40px 20px; color: #333; margin: 0; }
+        
+        /* 1. 사이트 제목 영역 */
+        header { margin-bottom: 50px; }
+        h1 { font-size: 3rem; margin: 0; color: #2c3e50; letter-spacing: -1px; }
+        p.subtitle { color: #7f8c8d; font-size: 1.2rem; margin-top: 10px; }
+
+        /* 2. 로그인/회원가입 영역 (우측 상단 고정 혹은 중앙 배치) */
+        .auth-container { background: white; padding: 25px; border-radius: 15px; max-width: 400px; margin: 0 auto 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .input-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        input { padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; background-color: #f9f9f9; }
+        
+        /* 버튼 스타일 */
+        .btn-main { background-color: #2c3e50; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-main:hover { background-color: #34495e; transform: translateY(-2px); }
+        .btn-sub { background-color: #ecf0f1; color: #2c3e50; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        
+        /* 소셜 로그인 버튼 */
+        .social-login { display: flex; gap: 10px; justify-content: center; margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; }
+        .btn-social { flex: 1; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; }
+        .kakao { background-color: #FEE500; color: #000000; }
+        .google { background-color: #ffffff; color: #5f6368; border: 1px solid #dadce0; }
+
+        /* 3. 분석 메뉴 카드 (가장 중요) */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto 60px; }
+        .card { 
+            background: white; padding: 40px 30px; border-radius: 20px; text-decoration: none; color: inherit;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: all 0.3s ease; border: 1px solid transparent; display: flex; flex-direction: column; align-items: center;
+        }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); border-color: #3498db; }
+        .icon { font-size: 60px; margin-bottom: 20px; }
+        .card-title { font-size: 24px; font-weight: bold; margin-bottom: 10px; color: #2c3e50; }
+        .card-desc { color: #7f8c8d; line-height: 1.6; }
+
+        /* 4. 통계 섹션 */
+        .stats-wrapper { background: white; padding: 40px; border-radius: 20px; max-width: 1000px; margin: 0 auto 60px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .stats-title { font-size: 20px; font-weight: bold; color: #2c3e50; margin-bottom: 30px; text-align: left; border-left: 5px solid #3498db; padding-left: 15px; }
+        .stats-grid { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px; }
+        .stat-item { text-align: center; }
+        .stat-label { font-size: 14px; color: #95a5a6; margin-bottom: 5px; }
+        .stat-value { font-size: 28px; font-weight: bold; color: #2c3e50; }
+
+        /* 5. 광고 배너 */
+        .ad-banner { 
+            background: linear-gradient(45deg, #f1f2f6, #ffffff); 
+            border: 2px dashed #bdc3c7; 
+            padding: 30px; 
+            margin: 0 auto; 
+            max-width: 800px; 
+            border-radius: 15px; 
+            color: #bdc3c7; 
+            font-weight: bold;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🧠 AI 심리 분석 연구소</h1>
+        <p class="subtitle">데이터로 보는 나의 내면, 인공지능이 분석해드립니다.</p>
+    </header>
+
+    <div id="auth-section" class="auth-container">
+        <div id="login-box">
+            <h3 style="margin-top:0; color:#2c3e50;">연구소 입장하기</h3>
+            <div class="input-group">
+                <input type="text" id="username" placeholder="아이디를 입력하세요">
+                <input type="password" id="password" placeholder="비밀번호를 입력하세요">
+                <button onclick="login()" class="btn-main">로그인</button>
+                <button onclick="showRegister()" class="btn-sub">3초 만에 회원가입</button>
+            </div>
+            
+            <div class="social-login">
+                <button onclick="loginWithKakao()" class="btn-social kakao">
+                    💬 카카오로 시작
+                </button>
+                <button onclick="loginWithGoogle()" class="btn-social google">
+                    G 구글로 시작
+                </button>
+            </div>
+        </div>
+
+        <div id="user-info" class="hidden">
+            <h3>👋 반가워요, <span id="display-name" style="color:#3498db;"></span>님!</h3>
+            <p style="color:#7f8c8d; margin-bottom:20px;">오늘 어떤 분석을 진행하시겠어요?</p>
+            <button onclick="logout()" class="btn-sub" style="width:100%;">로그아웃</button>
+        </div>
+    </div>
+
+    <div class="menu-grid">
+        <a href="/mbti/index.html" class="card">
+            <div class="icon">🧩</div>
+            <div class="card-title">MBTI 성격 분석</div>
+            <div class="card-desc">48문항 정밀 진단<br>숨겨진 나의 진짜 성격을 찾아보세요.</div>
+        </a>
+
+        <a href="/egen/index.html" class="card">
+            <div class="icon">⚖️</div>
+            <div class="card-title">에겐 vs 테토</div>
+            <div class="card-desc">본능적 성향 테스트<br>당신은 감성파인가요, 이성파인가요?</div>
+        </a>
+
+        <a href="/attachment/index.html" class="card">
+            <div class="icon">❤️</div>
+            <div class="card-title">연애 애착유형</div>
+            <div class="card-desc">나의 연애 스타일 분석<br>불안형, 회피형, 안정형?</div>
+        </a>
+    </div>
+
+    <div class="stats-wrapper">
+        <div class="stats-title">📊 실시간 분석 현황</div>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">오늘 방문자</div>
+                <div class="stat-value" id="stat-today">-</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">어제 방문자</div>
+                <div class="stat-value" id="stat-yesterday">-</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">이번 주 누적</div>
+                <div class="stat-value" id="stat-week">-</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">이번 달 누적</div>
+                <div class="stat-value" id="stat-month">-</div>
+            </div>
+        </div>
+        <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 30px;" class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-label">MBTI 분석</div>
+                <div class="stat-value" id="stat-mbti" style="color:#3498db;">-</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">에겐/테토 분석</div>
+                <div class="stat-value" id="stat-egen" style="color:#e67e22;">-</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">애착유형 분석</div>
+                <div class="stat-value" id="stat-attach" style="color:#e91e63;">-</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-banner">
+        📢 [광고 공간] 구글 애드센스 등 광고 배너가 들어갑니다.
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3003';
+
+        // --- 1. 소셜 로그인 설정 (키가 없으면 알림이 뜹니다) ---
+        
+        // [카카오] 키 설정
+        try {
+            // 여기에 '내 애플리케이션'의 [JavaScript 키]를 넣으세요
+            Kakao.init('7be11a93575319a6ef5d78c8634c8b39'); 
+        } catch(e) {}
+
+// public/index.html 의 loginWithKakao 함수 수정
+
+function loginWithKakao() {
+    if (!Kakao.isInitialized()) {
+        alert('카카오 API 키 설정이 필요합니다.');
+        return;
+    }
+
+    Kakao.Auth.login({
+        success: function(authObj) {
+            // 1. 카카오에서 받은 토큰(입장권)을 우리 서버로 전송
+            fetch(API_URL + '/auth/kakao', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ token: authObj.access_token })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message); // "로그인 성공!"
+                    location.reload();   // 새로고침해서 로그인 상태 반영
+                } else {
+                    alert('로그인 실패: ' + data.error);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('서버 통신 오류가 발생했습니다.');
+            });
+        },
+        fail: function(err) {
+            alert('카카오 로그인 창을 닫았거나 에러가 발생했습니다.');
+        }
+    });
+}
+
+        function loginWithGoogle() {
+            alert('구글 로그인 API 키 설정이 필요합니다.\nGoogle Cloud Console에서 Client ID를 발급받아야 합니다.');
+            // 실제 구현 시:
+            // google.accounts.oauth2.initTokenClient({...}).requestAccessToken();
+        }
+
+        // --- 2. 일반 로그인/회원가입 로직 ---
+
+        async function loadStats() {
+            try {
+                const res = await fetch(API_URL + '/stats');
+                const data = await res.json();
+                document.getElementById('stat-today').innerText = data.today;
+                document.getElementById('stat-yesterday').innerText = data.yesterday;
+                document.getElementById('stat-week').innerText = data.week;
+                document.getElementById('stat-month').innerText = data.month;
+                
+                document.getElementById('stat-mbti').innerText = data.mbti_total;
+                document.getElementById('stat-egen').innerText = data.egen_total;
+                document.getElementById('stat-attach').innerText = data.attach_total;
+            } catch (e) { console.error("통계 로드 실패", e); }
+        }
+
+        async function checkLogin() {
+            try {
+                const res = await fetch(API_URL + '/check-login');
+                const data = await res.json();
+                if (data.loggedIn) {
+                    document.getElementById('login-box').classList.add('hidden');
+                    document.getElementById('user-info').classList.remove('hidden');
+                    document.getElementById('display-name').innerText = data.username;
+                }
+            } catch (e) { console.error("로그인 체크 실패", e); }
+        }
+
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if(!username || !password) return alert("아이디와 비밀번호를 입력하세요.");
+
+            const res = await fetch(API_URL + '/login', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ username, password })
+            });
+            if (res.ok) location.reload();
+            else alert("로그인 실패: 아이디 또는 비밀번호를 확인하세요.");
+        }
+
+        async function showRegister() {
+            const username = prompt("사용할 아이디를 입력하세요:");
+            if (!username) return;
+            const password = prompt("비밀번호를 입력하세요:");
+            if (!password) return;
+
+            const res = await fetch(API_URL + '/register', {
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ username, password })
+            });
+            
+            if (res.ok) alert("가입 완료! 로그인해주세요.");
+            else alert("이미 존재하는 아이디입니다.");
+        }
+
+        async function logout() {
+            await fetch(API_URL + '/logout', { method: 'POST' });
+            location.reload();
+        }
+
+        // 초기 실행
+        loadStats();
+        checkLogin();
+    </script>
+</body>
+</html>

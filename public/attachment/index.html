@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연애 애착유형 테스트</title>
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center; background-color: #fff0f5; color: #333; }
+        h1 { margin-bottom: 30px; color: #e91e63; }
+        button { padding: 15px 20px; width: 100%; margin: 8px 0; cursor: pointer; background-color: #fff; border: 1px solid #f48fb1; border-radius: 8px; text-align: left; font-size: 16px; transition: all 0.2s; }
+        button:hover { background-color: #fce4ec; transform: translateY(-2px); }
+        .hidden { display: none; }
+        .nav-container { display: flex; justify-content: space-between; margin-top: 20px; }
+        .nav-btn { width: 48%; text-align: center; color: white; border: none; font-weight: bold; }
+        .result-box { text-align: left; margin-top: 20px; }
+        .ad-box { background: #eee; padding: 10px; margin: 15px 0; border: 1px dashed #aaa; text-align: center; font-size: 12px; color: #777; }
+    </style>
+</head>
+<body>
+    <div class="container" style="max-width:600px; margin:0 auto; padding:20px; text-align:center;">
+        
+        <div class="start-screen">
+            <h1 style="color:#e91e63;">❤️ 연애 애착유형 테스트</h1>
+            <p>나는 불안형일까, 회피형일까?<br>AI가 분석해드립니다.</p>
+            <button onclick="startTest()" style="background:#e91e63; color:white; border:none; padding:15px 40px; border-radius:30px; font-size:18px; cursor:pointer; margin-top:30px;">
+                검사 시작하기
+            </button>
+        </div>
+
+        <div id="question-container" style="display:none;">
+            </div>
+
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
