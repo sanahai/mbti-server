@@ -156,7 +156,7 @@ async function finishTest() {
         console.log("🚀 MBTI 분석 요청 전송 중...");
         
         // ★ [중요] MBTI 전용 주소 (/analyze/mbti)
-        const response = await fetch('http://localhost:3003/analyze/mbti', {
+        const response = await fetch('/analyze/...', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ answers: userAnswers })
@@ -234,4 +234,5 @@ function showResult(data) {
             </div>
         `;
     }
+
 }
