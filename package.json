@@ -2,9 +2,9 @@
   "name": "mbti-web-server",
   "version": "1.0.0",
   "description": "AI Psych Analysis Web",
-  "main": "server.js",
+  "main": "main.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node main.js"
   },
   "dependencies": {
     "express": "^4.18.2",
@@ -13,6 +13,6 @@
     "@google/generative-ai": "^0.1.3"
   },
   "engines": {
-    "node": "16.x"
+    "node": ">=18.0.0"
   }
 }
